@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseFirestore
+import FirebaseAuth
 
 class ViewController: UIViewController {
 
@@ -40,7 +41,8 @@ class ViewController: UIViewController {
     }
 
     private func handleLogin() {
-        if TokenManager.shared.token == nil {
+        print("current user: ", Auth.auth().currentUser ?? "no user")
+        if Auth.auth().currentUser == nil {
             print("calling logging screen")
             showLoginScreen()
         } else {
@@ -179,7 +181,26 @@ class ViewController: UIViewController {
     }
 
     func logout() {
+        let logoutAlert = UIAlertController(
+                title: "Logging out!", message: "Are you sure want to log out?",
+                preferredStyle: .actionSheet)
+            logoutAlert.addAction(
+                UIAlertAction(
+                    title: "Yes, log out!", style: .default,
+                    handler: { (_) in
+                        do {
+                            try Auth.auth().signOut()
+                            print("current user: ", Auth.auth().currentUser ?? "no user")
+                            print("Logged out, proceeding to call login screen")
+                            self.showLoginScreen()
+                        } catch {
+                            print("Error occured!")
+                        }
+                    })
+            )
+            logoutAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
 
+            self.present(logoutAlert, animated: true)
     }
 
     @objc private func handleStateSelected(notification: Notification) {

@@ -32,12 +32,9 @@ extension RegisterViewController {
                             _ = await (
                                 setName, storeUserToFireStore
                             )
-                            let options = ["Option1", "Option2", "Option3"] // Replace with your actual options
-                            let selectedOption = "Option1" // Replace with the appropriate value
-                            let notificationName = NSNotification.Name("registered")
-                            let landingVC = LandingPagePickerViewController(options: options, selectedOption: selectedOption, notificationName: notificationName)
-                            navigationController?.setViewControllers(
-                                [landingVC], animated: true)
+                        
+                            let viewController = ViewController()
+                            navigationController?.setViewControllers([viewController], animated: true)
                             self.setLoading(false)
                             self.notificationCenter.post(
                                 name: .registered, object: nil)

@@ -35,7 +35,7 @@ class RegisterView: UIView {
         setUpEmailTextField()
         setUpPasswordTextField()
         setUpConfirmPasswordTextField()
-        setUpLoginButton()
+     //   setUpLoginButton()
         setUpRegisterButton()
         setUpActivityIndicator()
         setUpBottomImageView()
@@ -124,12 +124,12 @@ class RegisterView: UIView {
         contentWrapper.addSubview(registerButton)
     }
     
-    func setUpLoginButton(){
-        loginButton = UIButton(type: .system)
-        loginButton.setTitle("Already have an account? Login!", for: .normal)
-        loginButton.translatesAutoresizingMaskIntoConstraints = false
-        contentWrapper.addSubview(loginButton)
-    }
+//    func setUpLoginButton(){
+//        loginButton = UIButton(type: .system)
+//        loginButton.setTitle("Already have an account? Login!", for: .normal)
+//        loginButton.translatesAutoresizingMaskIntoConstraints = false
+//        contentWrapper.addSubview(loginButton)
+//    }
     
     func setUpActivityIndicator() {
         activityIndicator = UIActivityIndicatorView(style: .medium)
@@ -194,12 +194,14 @@ class RegisterView: UIView {
             registerButton.trailingAnchor.constraint(equalTo: emailText.trailingAnchor),
             registerButton.heightAnchor.constraint(equalToConstant: 44),
                     
-            loginButton.topAnchor.constraint(equalTo: registerButton.bottomAnchor, constant: 16),
-            loginButton.centerXAnchor.constraint(equalTo: contentWrapper.centerXAnchor),
-            loginButton.bottomAnchor.constraint(equalTo: contentWrapper.bottomAnchor, constant: -20),
+//            loginButton.topAnchor.constraint(equalTo: registerButton.bottomAnchor, constant: 16),
+//            loginButton.centerXAnchor.constraint(equalTo: contentWrapper.centerXAnchor),
+//            loginButton.bottomAnchor.constraint(equalTo: contentWrapper.bottomAnchor, constant: -20),
+            
+            contentWrapper.bottomAnchor.constraint(equalTo: registerButton.bottomAnchor, constant: 20),
                     
             activityIndicator.centerXAnchor.constraint(equalTo: registerButton.centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: registerButton.centerYAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: registerButton.centerYAnchor, constant: 30),
             
             bottomImageView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -20),
             bottomImageView.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
@@ -207,7 +209,5 @@ class RegisterView: UIView {
             bottomImageView.heightAnchor.constraint(equalToConstant: 145)
         ])
     }
-
-
 
 }

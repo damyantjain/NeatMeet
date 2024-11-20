@@ -75,12 +75,8 @@ class LoginViewController: UIViewController {
                     self.setLoading(false)
                     self.notificationCenter.post(name: .loggedIn, object: nil)
                     self.onLoginSuccess?()
-                    let options = ["Option1", "Option2", "Option3"] // Replace with your actual options
-                    let selectedOption = "Option1" // Replace with the appropriate value
-                    let notificationName = NSNotification.Name("loggedIn")
-                    let landingVC = LandingPagePickerViewController(options: options, selectedOption: selectedOption, notificationName: notificationName)
-                    self.navigationController?.setViewControllers(
-                        [landingVC], animated: true)
+                    let viewController = ViewController()
+                    self.navigationController?.setViewControllers([viewController], animated: true)
                 } else {
                     self.setLoading(false)
                     print("Error occured: \(String(describing: error))")

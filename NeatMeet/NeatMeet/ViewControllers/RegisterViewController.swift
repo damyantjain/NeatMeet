@@ -91,13 +91,13 @@ class RegisterViewController: UIViewController {
     }
                 
     func setLoading(_ loading: Bool) {
-        registerView.loginButton.isEnabled = !loading
+     //   registerView.loginButton.isEnabled = !loading
         if loading {
             registerView.activityIndicator.startAnimating()
-            registerView.loginButton.setTitle("", for: .normal)
+      //      registerView.loginButton.setTitle("", for: .normal)
         } else {
             registerView.activityIndicator.stopAnimating()
-            registerView.loginButton.setTitle("Login instead?", for: .normal)
+     //       registerView.loginButton.setTitle("Login instead?", for: .normal)
         }
     }
                 
