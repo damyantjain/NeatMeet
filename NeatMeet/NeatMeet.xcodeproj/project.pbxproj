@@ -8,6 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		5282EF9511F7E3EEDBF72588 /* Pods_NeatMeet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 81AA156852456A0AABBD8B03 /* Pods_NeatMeet.framework */; };
+<<<<<<< Updated upstream
+=======
+		94D709CA2CED105D00701D84 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 94D709C92CED105D00701D84 /* Alamofire */; };
+		E12EE29D2CD1D1AF002FCB41 /* NotificationNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12EE29C2CD1D1AB002FCB41 /* NotificationNames.swift */; };
+		E14939512CE7AE9E00A77C65 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E14939502CE7AE9E00A77C65 /* GoogleService-Info.plist */; };
+		E14939542CE7AFFC00A77C65 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = E14939532CE7AFFC00A77C65 /* FirebaseAuth */; };
+		E14939562CE7AFFC00A77C65 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = E14939552CE7AFFC00A77C65 /* FirebaseFirestore */; };
+		E14939582CE7AFFC00A77C65 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = E14939572CE7AFFC00A77C65 /* FirebaseStorage */; };
+>>>>>>> Stashed changes
 		E16637212CC73A0800431C59 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16637172CC73A0800431C59 /* AppDelegate.swift */; };
 		E16637222CC73A0800431C59 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E166371E2CC73A0800431C59 /* SceneDelegate.swift */; };
 		E16637242CC73A0800431C59 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E16637182CC73A0800431C59 /* Assets.xcassets */; };
@@ -41,6 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94D709CA2CED105D00701D84 /* Alamofire in Frameworks */,
 				5282EF9511F7E3EEDBF72588 /* Pods_NeatMeet.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -155,6 +165,13 @@
 			);
 			mainGroup = E16636F62CC7254E00431C59;
 			minimizedProjectReferenceProxies = 1;
+<<<<<<< Updated upstream
+=======
+			packageReferences = (
+				E14939522CE7AEF100A77C65 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				94D709C82CED105D00701D84 /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
+>>>>>>> Stashed changes
 			productRefGroup = E16637002CC7254E00431C59 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -452,6 +469,51 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+<<<<<<< Updated upstream
+=======
+
+/* Begin XCRemoteSwiftPackageReference section */
+		94D709C82CED105D00701D84 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.1;
+			};
+		};
+		E14939522CE7AEF100A77C65 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.5.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		94D709C92CED105D00701D84 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 94D709C82CED105D00701D84 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		E14939532CE7AFFC00A77C65 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E14939522CE7AEF100A77C65 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		E14939552CE7AFFC00A77C65 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E14939522CE7AEF100A77C65 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		E14939572CE7AFFC00A77C65 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E14939522CE7AEF100A77C65 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+/* End XCSwiftPackageProductDependency section */
+>>>>>>> Stashed changes
 	};
 	rootObject = E16636F72CC7254E00431C59 /* Project object */;
 }
