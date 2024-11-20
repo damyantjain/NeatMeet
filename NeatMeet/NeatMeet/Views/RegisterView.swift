@@ -31,7 +31,7 @@ class RegisterView: UIView {
         setupContentWrapper()
         setupLogoImageView()
         setUpTitleLabel()
-       // setUpNameTextField()
+        setUpNameTextField()
         setUpEmailTextField()
         setUpPasswordTextField()
         setUpConfirmPasswordTextField()
@@ -169,12 +169,12 @@ class RegisterView: UIView {
             titleLabel.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 40),
             titleLabel.leadingAnchor.constraint(equalTo: contentWrapper.leadingAnchor, constant: 20),
                     
-//            nameText.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 40),
-//            nameText.leadingAnchor.constraint(equalTo: contentWrapper.leadingAnchor, constant: 20),
-//            nameText.trailingAnchor.constraint(equalTo: contentWrapper.trailingAnchor, constant: -20),
-//            nameText.heightAnchor.constraint(equalToConstant: 44),
+            nameText.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 40),
+            nameText.leadingAnchor.constraint(equalTo: contentWrapper.leadingAnchor, constant: 20),
+            nameText.trailingAnchor.constraint(equalTo: contentWrapper.trailingAnchor, constant: -20),
+            nameText.heightAnchor.constraint(equalToConstant: 44),
                     
-            emailText.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 40),
+            emailText.topAnchor.constraint(equalTo: nameText.bottomAnchor, constant: 16),
             emailText.leadingAnchor.constraint(equalTo: contentWrapper.leadingAnchor, constant: 20),
             emailText.trailingAnchor.constraint(equalTo: contentWrapper.trailingAnchor, constant: -20),
             emailText.heightAnchor.constraint(equalToConstant: 44),
@@ -204,7 +204,7 @@ class RegisterView: UIView {
             bottomImageView.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -20),
             bottomImageView.centerXAnchor.constraint(equalTo: self.safeAreaLayoutGuide.centerXAnchor),
             bottomImageView.widthAnchor.constraint(equalToConstant: 450),
-            bottomImageView.heightAnchor.constraint(equalToConstant: 180)
+            bottomImageView.heightAnchor.constraint(equalToConstant: 145)
         ])
     }
 

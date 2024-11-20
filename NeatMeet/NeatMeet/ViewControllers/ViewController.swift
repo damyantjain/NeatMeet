@@ -155,8 +155,7 @@ class ViewController: UIViewController {
 
     func showLoginScreen() {
         let loginVC = LoginViewController()
-        loginVC.modalPresentationStyle = .fullScreen
-        present(loginVC, animated: true)
+        navigationController?.setViewControllers([loginVC], animated: true)
     }
 
     func getProfileImageMenu() -> UIMenu {
