@@ -73,9 +73,7 @@ class LoginViewController: UIViewController {
                 if error == nil {
                     print("login successful")
                     self.setLoading(false)
-                    self.notificationCenter.post(name: .loggedIn, object: nil)
-                    self.onLoginSuccess?()
-                    let viewController = ViewController()
+                    let viewController = LandingViewController()
                     self.navigationController?.setViewControllers([viewController], animated: true)
                 } else {
                     self.setLoading(false)
