@@ -16,7 +16,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     var delegate:LandingViewController!
     var pickedImage:UIImage?
     var events: [Event] = []
-    var loggedInUser = User(email: "", name: "", id: UUID(uuidString: "6080F5FE-1D39-4416-B6F7-F490FB7A06B7") ?? UUID())
+    var loggedInUser = User(email: "", name: "", id: UUID(uuidString: "E13F8CDD-44C1-49CC-864B-F11C283ACD91") ?? UUID())
     let db = Firestore.firestore()
     
     override func loadView() {
@@ -140,14 +140,14 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     func setUpProfileData() async{
         do {
-               if loggedInUser.email.isEmpty {
-                   print("Logged-in user email is empty.")
-                   return
-               }
+               let userIdString = loggedInUser.id.uuidString
+            if loggedInUser.email.isEmpty, let currentUser = Auth.auth().currentUser {
+                    loggedInUser.email = currentUser.email ?? ""
+                }
 
                let snapshot = try await db.collection("users")
-                   .whereField("email", isEqualTo: loggedInUser.email)
-                   .getDocuments()
+                       .whereField("id", isEqualTo: userIdString)
+                       .getDocuments()
 
                if snapshot.documents.isEmpty {
                    print("No user found with the given email.")
