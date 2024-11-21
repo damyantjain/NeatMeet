@@ -96,9 +96,11 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     func getAllEvents() async {
             do {
+                
                 events.removeAll()
+                let userIdString = loggedInUser.id.uuidString
                 let snapshot = try await db.collection("events")
-                    .whereField("publishedBy", isEqualTo: loggedInUser.email)
+                    .whereField("publishedBy", isEqualTo: userIdString)
                     .getDocuments()
                 for document in snapshot.documents {
                     let data = document.data()
@@ -109,8 +111,9 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                        let city = data["city"] as? String,
                        let state = data["state"] as? String,
                        let imageUrl = data["imageUrl"] as? String,
-                       let publishedBy = data["publishedBy"] as? String,
-                          let eventDate = data["eventDate"] as? Timestamp
+                       let publishedByString = data["publishedBy"] as? String,
+                       let publishedBy = UUID(uuidString: publishedByString),
+                       let eventDate = data["eventDate"] as? Timestamp
                     {
                         let event = Event(
                             id: document.documentID,
@@ -140,11 +143,12 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     func setUpProfileData() async{
         do {
-               let userIdString = loggedInUser.id.uuidString
-            if loggedInUser.email.isEmpty, let currentUser = Auth.auth().currentUser {
+               
+               if loggedInUser.email.isEmpty, let currentUser = Auth.auth().currentUser {
                     loggedInUser.email = currentUser.email ?? ""
                 }
-
+            
+               let userIdString = loggedInUser.id.uuidString
                let snapshot = try await db.collection("users")
                        .whereField("id", isEqualTo: userIdString)
                        .getDocuments()
