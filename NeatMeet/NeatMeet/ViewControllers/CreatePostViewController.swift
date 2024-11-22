@@ -65,12 +65,12 @@ class CreatePostViewController: UIViewController {
             // Upload image to Firebase Storage
             let imageRef = Storage.storage().reference().child("eventImages/\(UUID().uuidString).jpg")
             
-            let uploadTask = imageRef.putData(imageData, completion: {(url, error) in
+            imageRef.putData(imageData, completion: {(url, error) in
                 if error == nil {
                     imageRef.downloadURL(completion: {(url, error) in
                         if error == nil {
                             imageUrl = url?.absoluteString
-                            self.postEventToFirestore(eventName: eName, location: eLocation, description: eDetails, eventDate: eDateTime, imageUrl: imageUrl)
+                            self.postEventToFirestore(eventName: eName, location: eLocation, description: eDetails, eventDate: eDateTime, imageUrl: imageUrl, eDetails: eDetails)
                         }
                     })
                 }
@@ -80,7 +80,7 @@ class CreatePostViewController: UIViewController {
     }
     
     
-    func postEventToFirestore(eventName: String, location: String, description: String, eventDate: Date, imageUrl: String?) {
+    func postEventToFirestore(eventName: String, location: String, description: String, eventDate: Date, imageUrl: String?, eDetails: String) {
         let db = Firestore.firestore()
     
         guard let userId = Auth.auth().currentUser?.uid else {
@@ -97,17 +97,23 @@ class CreatePostViewController: UIViewController {
                           city: "Boston",
                           state: "Massachusetts",
                           imageUrl: imageUrl ?? "",
-                          eventDate: eventDate)
+                          eventDate: eventDate,
+                          eventDescription: eDetails)
         
         
         // Add the event to Firestore under the "events" collection
         do {
-            try db.collection("events").addDocument(from: event) { error in
-                 if let error = error {
+            let docRef = db.collection("events").document()
+            try docRef.setData(from: event) { error in
+                 if error != nil {
                      print("Error adding event to Firestore")
                  } else {
                      print("Event successfully added to Firestore!")
                      // Navigate to the Show Post Page
+                     let documentID = docRef.documentID
+                
+                     self.showPost.eventId = documentID
+                     
                      self.navigationController?.pushViewController(self.showPost, animated: true)
                  }
              }
