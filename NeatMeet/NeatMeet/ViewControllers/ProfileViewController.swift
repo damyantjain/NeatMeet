@@ -74,7 +74,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                           let eventDate = data["eventDate"] as? Timestamp
                     {
                         let event = Event(
-                            id: document.documentID,
                             name: name,
                             likesCount: likesCount,
                             datePublished: datePublished.dateValue(),

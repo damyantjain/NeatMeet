@@ -110,7 +110,6 @@ class ViewController: UIViewController {
                 {
                     events.append(
                         Event(
-                            id: document.documentID,
                             name: name,
                             likesCount: likesCount,
                             datePublished: timestamp.dateValue(),

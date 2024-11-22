@@ -100,10 +100,18 @@ class ShowPostView: UIView {
             labelStateAndCity.topAnchor.constraint(equalTo: labelDateAndTime.bottomAnchor, constant: 32),
             labelStateAndCity.centerXAnchor.constraint(equalTo: contentWrapper.centerXAnchor),
             
-            labelDescription.topAnchor.constraint(equalTo: labelStateAndCity.bottomAnchor, constant: 32),
+            labelDescription.topAnchor.constraint(equalTo: labelDateAndTime.bottomAnchor, constant: 32),
             labelDescription.centerXAnchor.constraint(equalTo: contentWrapper.centerXAnchor)
             
         ])
+    }
+    
+    func configureWithEvent(event: Event) {
+        labelEventName.text = event.name
+        labelLocation.text = event.address
+        labelDateAndTime.text = "\(event.eventDate)" // You can format this further
+        labelStateAndCity.text = "\(event.state), \(event.city)"
+        labelDescription.text = event. // Adjust this if necessary
     }
     
     required init?(coder: NSCoder) {

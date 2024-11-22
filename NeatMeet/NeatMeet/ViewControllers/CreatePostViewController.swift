@@ -8,13 +8,18 @@
 
 import UIKit
 import PhotosUI
+import FirebaseAuth
+import FirebaseFirestore
+import FirebaseStorage
 
 class CreatePostViewController: UIViewController {
 
     var createPost = CreatePost()
     var pickedImage:UIImage?
-    
+    var currentUser:FirebaseAuth.User?
     let showPost = ShowPostViewController()
+    let database = Firestore.firestore()
+    
     
     override func loadView() {
         view = createPost
@@ -45,11 +50,73 @@ class CreatePostViewController: UIViewController {
     @objc func onTapPost() {
         // push to next screen.
         // set all the second screen variables
+        guard let eName = createPost.eventNameTextField.text, !eName.isEmpty,
+              let eLocation = createPost.locationTextField.text, !eLocation.isEmpty,
+              let eDetails = createPost.descriptionTextField.text, !eDetails.isEmpty else {
+            print("Please fill all required fields.") // show alert later
+            return
+        }
+        let eDateTime = createPost.timePicker.date
+        let ePhoto = createPost.buttonTakePhoto.imageView?.image
         
-        
-        
-        self.navigationController?.pushViewController(showPost, animated: true)
+        // Need to upload the image to Firebase Storage and retrieve the URL for it to populate in the db
+        var imageUrl: String? = nil
+        if let image = ePhoto, let imageData = image.jpegData(compressionQuality: 0.8) {
+            // Upload image to Firebase Storage
+            let imageRef = Storage.storage().reference().child("eventImages/\(UUID().uuidString).jpg")
+            
+            let uploadTask = imageRef.putData(imageData, completion: {(url, error) in
+                if error == nil {
+                    imageRef.downloadURL(completion: {(url, error) in
+                        if error == nil {
+                            imageUrl = url?.absoluteString
+                            self.postEventToFirestore(eventName: eName, location: eLocation, description: eDetails, eventDate: eDateTime, imageUrl: imageUrl)
+                        }
+                    })
+                }
+            })
+        }
+
     }
+    
+    
+    func postEventToFirestore(eventName: String, location: String, description: String, eventDate: Date, imageUrl: String?) {
+        let db = Firestore.firestore()
+    
+        guard let userId = Auth.auth().currentUser?.uid else {
+            print("User is not logged in.")
+            return
+        }
+        
+        // Create the event data
+        let event = Event(name: eventName,
+                          likesCount: 0,
+                          datePublished: Date(),
+                          publishedBy: userId,
+                          address: location,
+                          city: "Boston",
+                          state: "Massachusetts",
+                          imageUrl: imageUrl ?? "",
+                          eventDate: eventDate)
+        
+        
+        // Add the event to Firestore under the "events" collection
+        do {
+            try db.collection("events").addDocument(from: event) { error in
+                 if let error = error {
+                     print("Error adding event to Firestore")
+                 } else {
+                     print("Event successfully added to Firestore!")
+                     // Navigate to the Show Post Page
+                     self.navigationController?.pushViewController(self.showPost, animated: true)
+                 }
+             }
+        } catch {
+            print("Error adding document!")
+        }
+    }
+    
+    
     
      func getMenuImagePicker() -> UIMenu{
          let menuItems = [
