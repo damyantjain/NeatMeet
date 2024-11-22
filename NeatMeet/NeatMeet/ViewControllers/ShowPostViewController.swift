@@ -11,44 +11,66 @@ import FirebaseFirestore
 class ShowPostViewController: UIViewController {
 
     var showPost = ShowPostView()
-    
+    var eventId: String = ""
     override func loadView() {
         view = showPost
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Assuming you have the event ID (for example, passed from the previous view)
-        let eventId = "eventDocumentId" // Replace with the actual event document ID
+
         fetchEventAndDisplay(eventId: eventId)
+        showPost.likeButton.addTarget(self, action: #selector(didTapLikeButton), for: .touchUpInside)
+
+   
+    }
+    
+    @objc func didTapLikeButton() {
+        incrementLikeCount(eventId: eventId)
+      }
+    
+    
+    func incrementLikeCount(eventId: String) {
+        let db = Firestore.firestore()
+    
+        let eventRef = db.collection("events").document(eventId)
+
+        eventRef.updateData([
+            "likesCount": FieldValue.increment(Int64(1))
+        ]) { error in
+            if error != nil {
+                print("Like count updated successfully!")
+            } else {
+                print("Error incrementing like count")
+            }
+        }
     }
 
+    
+    
     // Function to fetch the event from Firestore
     func fetchEventAndDisplay(eventId: String) {
         let db = Firestore.firestore()
         
-        // Fetch the event document by ID
         db.collection("events").document(eventId).getDocument { (document, error) in
-            if let error = error {
-                print("Error fetching event: \(error.localizedDescription)")
+            if error != nil {
+                print("Error fetching event")
                 return
             }
             
-            guard let document = document, document.exists else {
+            guard let document = document else {
                 print("Event document does not exist")
                 return
             }
-            
-            // Decode the document data into an Event object
+
             do {
                 let event = try document.data(as: Event.self)
-                if let event = event {
-                    // Configure ShowPostView with event data
-                    self.showPost.configureWithEvent(event: event)
-                }
+                // Configure ShowPostView with event data
+                self.showPost.configureWithEvent(event: event)
+                self.showPost.updateLikeCountLabel(count: event.likesCount)
+                
             } catch {
-                print("Error decoding event data: \(error.localizedDescription)")
+                print("Error decoding event data")
             }
         }
     }

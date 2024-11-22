@@ -19,7 +19,7 @@ struct Event: Codable {
     var eventDate: Date
     var eventDescription: String
     
-    init(name: String, likesCount: Int, datePublished: Date, publishedBy: String, address: String, city: String, state: String, imageUrl: String, eventDate: Date, id: String? = nil, eventDescription: String) {
+    init(id: String? = nil,name: String, likesCount: Int, datePublished: Date, publishedBy: String, address: String, city: String, state: String, imageUrl: String, eventDate: Date, eventDescription: String) {
          self.id = id
          self.name = name
          self.likesCount = likesCount

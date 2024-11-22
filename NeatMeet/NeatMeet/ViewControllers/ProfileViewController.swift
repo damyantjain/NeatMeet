@@ -63,7 +63,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                 print(loggedInUser.email)
                 for document in snapshot.documents {
                     let data = document.data()
-                       if let name = data["name"] as? String,
+                    if let name = data["name"] as? String,
+                       let id = data["id"] as? String,
                        let likesCount = data["likesCount"] as? Int,
                        let datePublished = data["datePublished"] as? Timestamp,
                        let address = data["address"] as? String,
@@ -71,9 +72,11 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                        let state = data["state"] as? String,
                        let imageUrl = data["imageUrl"] as? String,
                        let publishedBy = data["publishedBy"] as? String,
-                          let eventDate = data["eventDate"] as? Timestamp
+                       let eventDate = data["eventDate"] as? Timestamp,
+                       let eventDescription = data["eventDescription"] as? String
                     {
                         let event = Event(
+                            id: id,
                             name: name,
                             likesCount: likesCount,
                             datePublished: datePublished.dateValue(),
@@ -82,7 +85,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                             city: city,
                             state: state,
                             imageUrl: imageUrl,
-                            eventDate: eventDate.dateValue()
+                            eventDate: eventDate.dateValue(),
+                            eventDescription: eventDescription
                         )
                         events.append(event)
                         events.sort { $0.eventDate > $1.eventDate }
