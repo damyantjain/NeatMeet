@@ -60,18 +60,18 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                     return
                 }
                
-                if let currentUser = Auth.auth().currentUser {
-                    currentUser.updateEmail(to: textFieldEmail) { error in
-                        if let error = error {
-                            self.showAlert(title: "Error", message: "Failed to update email in Authentication: \(error.localizedDescription)")
-                        } else {
-                            self.showAlert(title: "Success", message: "Profile updated successfully.")
-                            self.loggedInUser.email = textFieldEmail
-                        }
-                    }
-                } else {
-                    self.showAlert(title: "Error", message: "No authenticated user found.")
-                }
+//                if let currentUser = Auth.auth().currentUser {
+//                    currentUser.updateEmail(to: textFieldEmail) { error in
+//                        if let error = error {
+//                            self.showAlert(title: "Error", message: "Failed to update email in Authentication: \(error.localizedDescription)")
+//                        } else {
+//                            self.showAlert(title: "Success", message: "Profile updated successfully.")
+//                            self.loggedInUser.email = textFieldEmail
+//                        }
+//                    }
+//                } else {
+//                    self.showAlert(title: "Error", message: "No authenticated user found.")
+//                }
             }
         }
     }
