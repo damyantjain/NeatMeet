@@ -115,6 +115,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             do {
                 
                 events.removeAll()
+                let calendar = Calendar.current
+                let currentDate = calendar.startOfDay(for: Date())
                 if let userIdString = UserManager.shared.loggedInUser?.id{
                     let snapshot = try await db.collection("events")
                         .whereField("publishedBy", isEqualTo: userIdString)
@@ -122,33 +124,36 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                     for document in snapshot.documents {
                         let data = document.data()
                         if let name = data["name"] as? String,
-                           let likesCount = data["likesCount"] as? Int,
-                           let datePublished = data["datePublished"] as? Timestamp,
-                           let address = data["address"] as? String,
-                           let city = data["city"] as? String,
-                           let state = data["state"] as? String,
-                           let imageUrl = data["imageUrl"] as? String,
-                           let publishedBy = data["publishedBy"] as? String,
-                           let eventDate = data["eventDate"] as? Timestamp,
-                           let eDetails = data["eventDescription"] as? String
+                            let likesCount = data["likesCount"] as? Int,
+                            let datePublished = data["datePublished"] as? Timestamp,
+                            let address = data["address"] as? String,
+                            let city = data["city"] as? String,
+                            let state = data["state"] as? String,
+                            let imageUrl = data["imageUrl"] as? String,
+                            let publishedBy = data["publishedBy"] as? String,
+                            let eventDate = data["eventDate"] as? Timestamp,
+                            let eDetails = data["eventDescription"] as? String
                         {
-                            let event = Event(
-                                id: document.documentID,
-                                name: name,
-                                likesCount: likesCount,
-                                datePublished: datePublished.dateValue(),
-                                publishedBy: publishedBy,
-                                address: address,
-                                city: city,
-                                state: state,
-                                imageUrl: imageUrl,
-                                eventDate: eventDate.dateValue(),
-                                eventDescription: eDetails
+                            events.append(
+                                Event(
+                                    id: document.documentID,
+                                    name: name,
+                                    likesCount: likesCount,
+                                    datePublished: datePublished.dateValue(),
+                                    publishedBy: publishedBy,
+                                    address: address,
+                                    city: city,
+                                    state: state,
+                                    imageUrl: imageUrl,
+                                    eventDate: eventDate.dateValue(),
+                                    eventDescription: eDetails
+                                )
                             )
-                            events.append(event)
-                            events.sort { $0.eventDate > $1.eventDate }
+                            events.sort { $0.datePublished > $1.datePublished }
                             self.profileScreen.eventTableView.reloadData()
                         }
+                           
+                        
                     }
                 }
 
@@ -281,10 +286,13 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 withIdentifier: "events", for: indexPath)
             as! EventTableViewCell
         let event = events[indexPath.row]
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d, HH:mm"
         cell.selectionStyle = .none
         cell.eventNameLabel?.text = event.name
         cell.eventLocationLabel?.text = event.address
-        cell.eventDateTimeLabel?.text = event.eventDate.description
+        cell.eventDateTimeLabel?.text = dateFormatter.string(
+            from: event.eventDate)
         cell.eventLikeLabel?.text = (String)(event.likesCount)
         if let imageUrl = URL(string: event.imageUrl) {
             cell.eventImageView.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "event_ph_square"))
